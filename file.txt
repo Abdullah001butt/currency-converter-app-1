@@ -1,0 +1,60 @@
+import React, { useState } from "react";
+import { CurrencyConverter } from "./api/PostApi";
+
+const App = () => {
+  const [fromCurrency, setFromCurrency] = useState("USD");
+  const [toCurrency, setToCurrency] = useState("EUR");
+  const [amount, setAmount] = useState(1);
+  const [result, setResult] = useState(null);
+
+  const handleConvert = async () => {
+    const res = await CurrencyConverter(fromCurrency, toCurrency, amount);
+    setResult(res.data.conversion_result);
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-4 text-center">
+          Currency Converter
+        </h1>
+        <div className="space-y-4">
+          <input
+            type="text"
+            value={fromCurrency}
+            onChange={(e) => setFromCurrency(e.target.value)}
+            placeholder="From Currency"
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          <input
+            type="text"
+            value={toCurrency}
+            onChange={(e) => setToCurrency(e.target.value)}
+            placeholder="To Currency"
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Amount"
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          <button
+            onClick={handleConvert}
+            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+          >
+            Convert
+          </button>
+        </div>
+        {result && (
+          <div className="mt-4 text-center">
+            <span className="text-lg font-semibold">Result: {result}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default App;
