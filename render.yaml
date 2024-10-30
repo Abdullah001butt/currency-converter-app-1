@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: currency-converter-app
-    env: static
-    staticPublishPath: build
-    buildCommand: npm run build
-    startCommand: serve -s build
